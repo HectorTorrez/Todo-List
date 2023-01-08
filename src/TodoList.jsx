@@ -7,10 +7,16 @@ export const TodoList = () => {
     const [todoList, setTodoList] = useState([])
 
     const onAddTodo = ( onNewCategory ) => {
+        let newTodo = {
+          id: new Date().getTime(),
+          task: onNewCategory,
+          completed: false
+        }
         setTodoList([
-            onNewCategory,
+              newTodo,
             ...todoList
         ])
+        
     }
 
   return (

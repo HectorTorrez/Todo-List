@@ -1,25 +1,45 @@
-import React from 'react'
-export const Todo = ({ todoList, setTodoList }) => {
+import React, { useState } from 'react'
+import { TodoForm } from './TodoForm'
+export const Todo = ({ todoList, setTodoList, }) => {
 
+    const [edit, setEdit] = useState({
+        id: null,
+        task: ''
+    })
+    
+    const submitUpdate = (task) => {
+        // event.preventDefault();
+        
+        updateTodo(edit.id, task);
+        setEdit({
+            id:null,
+            task: task,
+        })
+    }
     const onDelete = (index) => {
         setTodoList( todoList.filter((todo, i) => i !== index))
     }
+    
+    
+    const updateTodo = (todoId, newValue ) => {
+        setTodoList(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+    }
 
-    const onEdit = (index, newValue) => {
-        const newTodos = [...todoList];
-        newTodos[index] = newValue;
-        setTodoList(newTodos);
-      }
+    if(edit.id){
+       return <TodoForm edit={ edit } onSubmit= { submitUpdate }/>
+    }
+
+    
   return (
     <ul>
     {
         todoList.map( (todo, index) => [
-
-            <li key={index}>
-                    { todo }
-                    <button onClick={ () => onDelete(index) }>Delete</button>
-                    <button onClick={ () => onEdit(index) }>Edit</button>
+            <li key={todo.index}>
+            { todo.task }
+            <button onClick={ () => onDelete(index) }>Delete</button>
+            <button onClick={() => setEdit( { id: todo.id, task: todo.task } )}> Edit</button>     
             </li>
+                
 
         ])
     }

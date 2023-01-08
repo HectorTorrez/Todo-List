@@ -37,4 +37,6 @@ li{
   margin-left: 5px ;
 }
 
-
+.todoComplete{
+  text-decoration: line-through;
+}
